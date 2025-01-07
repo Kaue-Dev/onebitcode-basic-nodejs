@@ -99,3 +99,75 @@ const totalMemory = os.totalmem();
 const freeMemory = os.freemem();
 ```
 
+# Streams e Buffers
+
+- Streams: fluxos de dados contínuos, informações que podem ser lidas ou escritas de forma incremental
+
+- Buffers: áreas para armazenar dados temporariamente, normalmente na RAM
+
+```js
+const fs = require('fs');
+
+const readStream = fs.createReadStream('file.txt');
+const buffer = []; // Exemplo ilustrativo de um Buffer
+
+readStream.on('data', (chunk) => {
+  buffer.push(chunk);
+  console.log(chunk);
+});
+
+readStream.on('end', () => {
+  const completeData = Buffer.concat(buffer);
+  console.log(completeData.toString());
+});
+```
+
+# Interações no terminal
+
+> A forma mais simples de criar interações de entrada e saída no terminal é utilizando os objetos stdin e stdout disponíveis através da variável global process
+
+```js
+process.stdout.write('Digite o seu nome: ')
+  
+process.stdin.on('data', data => {
+  process.stdout.write(`Seu nome é ${data}`)
+})
+```
+
+Também é possível usar o módulo readline do node
+
+```js
+const readline = require('readline')
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+})
+
+rl.question('Digite o seu nome: ', nome => {
+  rl.write(`Seu nome é ${nome}\n`)
+  rl.close()
+})
+
+rl.once('close', () => {
+  rl.write('Saindo...\n')
+  process.exit(0)
+})
+```
+
+# Argumentos de linha de comando
+
+```js
+const namedArguments = {}
+
+process.argv.slice(2).forEach((arg, index, array) => {
+  if (arg.startsWith("--")) {
+    const argName = arg.slice(2)
+    const argValue = array[index + 1]
+    namedArguments[argName] = argValue
+  }
+})
+
+console.log("Argumentos Informados: ")
+console.log(namedArguments)
+```
