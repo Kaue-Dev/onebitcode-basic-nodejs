@@ -171,3 +171,44 @@ process.argv.slice(2).forEach((arg, index, array) => {
 console.log("Argumentos Informados: ")
 console.log(namedArguments)
 ```
+
+---
+
+# HTTP e Programação Web
+
+HTTP: Principal protocolo usado na Web, baseado em requisições e respostas, define como o cliente e o servidor vão interagir
+
+Métodos HTTP
+
+> Get (Obtenção de dados)
+> Post (Envio de dados)
+> Put/Patch (Alteração de dados)
+> Delete (Exclusão de dados)
+
+Status HTTP
+[HTTP Status Dogs](https://http.dog)
+
+> 200 (Sucesso)
+> 300 (Redirecionamento)
+> 400 (Problema na Requisição)
+> 500 (Problema no Servidor)
+
+# Criando um Servidor Http
+
+```js
+const http = require('http');
+
+const server = http.createServer((req, res) => {
+  console.log(req)
+  res.writeHead(200)
+  res.write('NodeJS Server')
+  res.end()
+})
+
+const PORT = 3000
+
+server.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`)
+})
+```
+
